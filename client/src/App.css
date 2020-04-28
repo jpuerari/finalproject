@@ -4,7 +4,15 @@ body {
    
 }
 
+
 h1{
     text-align: center;
     font-size: 75px;
 }
+
+.form-box {
+    background-color: rgb(227, 222, 204);
+    opacity: 0.6;
+    padding: 15px;
+}
+

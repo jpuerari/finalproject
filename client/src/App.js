@@ -1,10 +1,12 @@
 //imports
 import React, { Component } from "react";
 import { BrowserRouter as Router, Route } from "react-router-dom";
+
 import Login from "./pages/Login";
 import Places from './pages/Places';
 import BucketList from './pages/BucketList'
 import Navbar from './components/Navbar';
+
 import "./App.css";
 
 
@@ -20,7 +22,6 @@ class App extends Component {
       <Router>
       <div>
         {/* <NavTabs /> */}
-        {/* <Route exact path="/" component={Home} /> */}
         <Route exact path="/" component={Login} />
         <Navbar />
         <Route exact path="/Places" component={Places} />
