@@ -7,8 +7,7 @@ import Places from './pages/Places';
 import BucketList from './pages/BucketList'
 import Navbar from './components/Navbar';
 
-import Login from "./pages/Login"
-import Home from "./pages/Home"
+
 
 
 import "./App.css";
