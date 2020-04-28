@@ -7,6 +7,10 @@ import Places from './pages/Places';
 import BucketList from './pages/BucketList'
 import Navbar from './components/Navbar';
 
+import Login from "./pages/Login"
+import Home from "./pages/Home"
+
+
 import "./App.css";
 
 
@@ -22,6 +26,7 @@ class App extends Component {
       <Router>
       <div>
         {/* <NavTabs /> */}
+
         <Route exact path="/" component={Login} />
         <Navbar />
         <Route exact path="/Places" component={Places} />

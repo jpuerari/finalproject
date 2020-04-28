@@ -42,7 +42,9 @@ class Login extends Component {
       `);
 
       //api call
+
       window.location.replace("/Places")
+
     } else {
       console.error("error");
     }
