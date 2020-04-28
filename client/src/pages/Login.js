@@ -40,6 +40,9 @@ class Login extends Component {
         usr: ${this.state.usr}
         Password: ${this.state.password}
       `);
+
+      //api call
+      window.location.replace("/home")
     } else {
       console.error("error");
     }
@@ -78,7 +81,7 @@ class Login extends Component {
 
     return (
       <div className="d-flex container align-items-center justify-items-center" style={{height: "100vh"}}>
-        <div className="form-check text-center mx-auto">
+        <div className="form-check text-center mx-auto form-box">
           <div className="wrapper">
             <div className="form-wrapper">
               <h1>Login</h1>
@@ -93,9 +96,9 @@ class Login extends Component {
                     noValidate
                     onChange={this.changeHandle}
                   />
-                  {formErrors.usr.length > 0 && (
+                  {/* {formErrors.usr.length > 0 && (
                     <span className="errorMessage">{formErrors.usr}</span>
-                  )}
+                  )} */}
                 </div>
                 <div className="form-group">
                   <div className="password">
@@ -108,9 +111,9 @@ class Login extends Component {
                       noValidate
                       onChange={this.changeHandle}
                     />
-                    {formErrors.password.length > 0 && (
+                    {/* {formErrors.password.length > 0 && (
                       <span className="errorMessage">{formErrors.password}</span>
-                    )}
+                    )} */}
                   </div>
                   <div className="login">
                     <button type="submit" className="btn btn-primary" >Login</button>
