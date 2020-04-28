@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { Jumbotron, Container, Row, Col, Form, Card, Button, CardColumns, Collapse } from 'react-bootstrap';
+import Navbar from '../components/Navbar';
 
 function Places() {
         // create state for holding returned google api data 
@@ -23,6 +24,7 @@ function Places() {
 
     return (
         <>
+         <Navbar />
            <Jumbotron fluid className='text-light bg-dark'>
              <Container>
                <h1>🛩 Travel Bucket List 🛩</h1>
