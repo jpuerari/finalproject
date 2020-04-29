@@ -14,5 +14,12 @@ h1{
     background-color: rgb(227, 222, 204);
     opacity: 0.6;
     padding: 15px;
+    max-width: 100%;
+}
+.wrapper{
+    width: 100%;
+}
+.world{
+    width: 60%;
 }
 

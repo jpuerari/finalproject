@@ -82,16 +82,18 @@ class Login extends Component {
     const { formErrors } = this.state;
 
     return (
-      <div className="d-flex container align-items-center justify-items-center" style={{height: "100vh"}}>
+      <div className='login-page'> 
+      <div className="row justify-content-center align-items-center" style={{height: "100vh"}}>
+        <div className='col-md-6 col-12'>
         <div className="form-check text-center mx-auto form-box">
           <div className="wrapper">
             <div className="form-wrapper">
               <h1>Login</h1>
               <form onSubmit={this.submitHandle} noValidate>
                 <div className="usr">
-                  <label htmlFor="usr">Username: </label>
+               
                   <input
-                    className={formErrors.usr.length > 0 ? "error" : null}
+                    className={formErrors.usr.length > 0 ? "error world" : 'world'}
                     placeholder="Username"
                     type="usr"
                     name="usr"
@@ -104,9 +106,9 @@ class Login extends Component {
                 </div>
                 <div className="form-group">
                   <div className="password">
-                    <label htmlFor="password">Password: </label>
+                   
                     <input
-                      className={formErrors.password.length > 0 ? "error" : null}
+                      className={formErrors.password.length > 0 ? "error world mt-2" : 'world mt-2'}
                       placeholder="Password"
                       type="password"
                       name="password"
@@ -117,7 +119,7 @@ class Login extends Component {
                       <span className="errorMessage">{formErrors.password}</span>
                     )} */}
                   </div>
-                  <div className="login">
+                  <div className="login mt-2">
                     <button type="submit" className="btn btn-primary" >Login</button>
                   </div>
                 </div>
@@ -125,7 +127,8 @@ class Login extends Component {
             </div>
           </div>
         </div>
-
+      </div>
+      </div>
       </div>
     )
 
