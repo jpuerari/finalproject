@@ -5,12 +5,14 @@ import Navbar from '../components/Navbar';
 function BucketList(){
     return(
       <>
+      
        <Navbar />
        <Jumbotron fluid className='text-light bg-dark'>
         <Container>
           <h1>🛩 My Bucket List 🛩</h1>
         </Container>
       </Jumbotron>
+  
       </>
     );
 }

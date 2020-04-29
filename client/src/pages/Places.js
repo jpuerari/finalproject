@@ -41,7 +41,7 @@ function Places() {
                     onChange={(e) => setSearchInput(e.target.value)}
                     type='text'
                     size='lg'
-                    placeholder='🛩  Search for a Place'
+                    placeholder='✈️  Search for a Place'
                    />
                  </Col>
                   <Col xs={12} md={4}>

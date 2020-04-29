@@ -1,8 +1,14 @@
-body {
+body{
+    background-image: url(./background2.jpg);  
+    background-size: cover;
+}
+
+.login-page{
     background-image: url(./background.jpg);
     background-size: cover;
-   
+
 }
+    
 
 
 h1{
