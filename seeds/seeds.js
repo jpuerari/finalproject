@@ -35,3 +35,4 @@ async function seedDb(){
     console.log(error)
   }
 }
+
