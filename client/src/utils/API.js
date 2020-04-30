@@ -19,3 +19,4 @@ export default {
     return axios.delete(`/api/countries/${Id}`);
   },
 }
+
