@@ -68,7 +68,12 @@ function Places() {
         </Form>
 
         {
-          countries.map(c => <div>{c.name}</div>)
+          countries.map(c => <div>{c.name}
+          {c.nativeName}
+          {c.capital}
+          {c.currencies}
+          {c.languages}</div>)
+          
         }
       </Container>
     </>
