@@ -1,7 +1,10 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import { Jumbotron, Container, Row, Col, Form, Card, Button, CardColumns, Collapse } from 'react-bootstrap';
 import Navbar from '../components/Navbar';
-import API from '../utils/API'
+
+import SavedCountryContext from '../utils/SavedCountryContext';
+
+import { saveCountries, searchCountries} from '../utils/API';
 
 function Places() {
   // create state for holding returned  api data 
@@ -9,13 +12,20 @@ function Places() {
   // create styate for holding our search field data
   const [searchInput, setSearchInput] = useState('');
 
+  const { countries: savedCountries, getSavedCountries } = useContext(SavedCountryContext);
+
+  console.log(savedCountries)
+
+
+
+
   const handleFormSubmit = event => {
     event.preventDefault();
 
     if (!searchInput) {
       return false;
     }
-    API.getCountries(searchInput)
+    searchCountries(searchInput)
       .then(response => {
 
         console.log(response.data)
@@ -27,7 +37,15 @@ function Places() {
 
 
   // create function to handle saving a country to our database
-  const handleSaveCountry = (countryId) => { }
+  const handleSaveCountries = (countryId) => {
+   
+      const countryToSave = searchCountries.find((country) => country.countryId === countryId);
+
+    
+      saveCountries(countryToSave)
+        .then(() => (getSavedCountries))
+        .catch((err) => console.log(err));
+   };
   // find the country in `searchedCountries` state by the matching id
 
 
