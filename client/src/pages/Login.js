@@ -35,19 +35,19 @@ class Login extends Component {
   submitHandle = e => {
     e.preventDefault();
 
-    if (formValidation(this.state)) {
-      console.log(`
-        usr: ${this.state.usr}
-        Password: ${this.state.password}
-      `);
+    // if (formValidation(this.state)) {
+    //   console.log(`
+    //     usr: ${this.state.usr}
+    //     Password: ${this.state.password}
+    //   `);
 
-      //api call
+    //   //api call
 
-      window.location.replace("/Places")
 
-    } else {
-      console.error("error");
-    }
+    // } else {
+    //   console.error("error");
+    // }
+    this.props.history.push("/places")
   };
 
   changeHandle = e => {
