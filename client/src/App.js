@@ -27,8 +27,8 @@ class App extends Component {
 
         <Route exact path="/" component={Login} />
        
-        <Route exact path="/Places" component={Places} />
-        <Route exact path="/BucketList" component={BucketList} />
+        <Route exact path="/places" component={Places} />
+        <Route exact path="/bucketlist" component={BucketList} />
       </div>
       </Router>
     );
