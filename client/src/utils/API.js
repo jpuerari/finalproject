@@ -1,10 +1,16 @@
 import axios from 'axios';
 
-export default {
-  getSavedCountries: function () {
+  export const  getSavedCountries = function () {
     return axios.get('/api/countries');
-  },
-  getCountries: function (country) {
+  };
+
+  export const saveCountries = function (countryData) {
+    return axios.post('/api/contries', countryData);
+  };
+  export const deleteCountry = function (countryId) {
+    return axios.delete(`/api/countries/${countryId}`);
+  };
+  export const searchCountries = function (country) {
     return axios({
       "method": "GET",
       "url": "https://restcountries-v1.p.rapidapi.com/name/" + country,
@@ -14,9 +20,6 @@ export default {
         "x-rapidapi-key": "df7e857c6cmsha59b298d56b071ap16165fjsndbf8b1441fa8"
       }
     });
-  },
-  deleteCountry: function (Id) {
-    return axios.delete(`/api/countries/${Id}`);
-  },
-}
+  };
+
 

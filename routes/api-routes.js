@@ -1,5 +1,5 @@
 const router = require('express').Router();
-const { getAllPlaces, savePlace, deletePlace } = require('../../controllers/P lace-controller');
+const { getAllPlaces, savePlace, deletePlace } = require('../../controllers/Place-controller');
 
 // for GET and POST /api/books
 router.route('/').get(getAllPlaces).post(savePlace);
