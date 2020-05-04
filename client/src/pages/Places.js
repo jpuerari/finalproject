@@ -6,6 +6,9 @@ import SavedCountryContext from '../utils/SavedCountryContext';
 
 import { saveCountries, searchCountries} from '../utils/API';
 
+import { set } from "mongoose";
+
+
 function Places() {
   // create state for holding returned  api data 
   const [countries, setCountries] = useState([]);
@@ -33,7 +36,28 @@ function Places() {
      
       })
       .catch(err => console.warn(err))
-  }
+  
+
+  searchCountries(searchInput)
+  .then(({ data }) => {
+    const countryData = data.items.map((country) => ({
+      countryId: country.id,
+      nativeName: country.volumeInfo.nativeName,
+      name: country.volumeInfo.name || ['No country to display'],
+      capital: country.volumeInfo.capital,
+      currencies: country.volumeInfo.currencies,
+      languages: country.volumeInfo.languages
+    }));
+
+    return setCountries(countryData);
+  })
+  .then(() => setCountries(''))
+  .catch((err) => console.log(err));
+};
+
+
+
+
 
 
   // create function to handle saving a country to our database
@@ -85,15 +109,39 @@ function Places() {
           </Form.Row>
         </Form>
 
-        {
-          countries.map(c => <div>{c.name}
-          {c.nativeName}
-          {c.capital}
-          {c.currencies}
-          {c.languages}</div>)
-          
-        }
       </Container>
+      <Container fluid>
+        <h2>{countries.length ? `Viewing ${countries.length} results:` : 'Search for a country to begin'}</h2>
+        <CardColumns>
+          {countries.map((country) => {
+  
+            return (
+              <Card key={country.countryId} border='dark'>
+                <Card.Body>
+                  <Card.Title>{country.name}</Card.Title>
+                  <p className='small'>Native Name: {country.nativeName}</p>
+                  <Card.Text>{country.nativeName}</Card.Text>
+                 <p className='small'>Capital: {country.capital}</p>
+                  <Card.Text>{country.capital}</Card.Text>
+                  <p className='small'>Currencies Name: {country.currencies}</p>
+                  <Card.Text>{country.currencies}</Card.Text>
+                  <p className='small'>Languages Name: {country.languages}</p>
+                  <Card.Text>{country.languages}</Card.Text>
+                  <Button
+                    disabled={savedCountries.some((savedCountries) => savedCountries.countryId === country.countryId)}
+                    className='btn-block btn-info'
+                    onClick={() => handleSaveCountries(country.countryId)}>
+                    {savedCountries.some((savedCountries) => savedCountries.countryId === country. countryId)
+                      ? 'This country has already been saved!'
+                      : 'Save this country!'}
+                  </Button>
+                </Card.Body>
+              </Card>
+            );
+          })}
+        </CardColumns>
+      </Container>
+
     </>
   )
 
