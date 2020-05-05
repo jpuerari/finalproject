@@ -86,7 +86,8 @@ function Places() {
         </Form>
 
         {
-          countries.map(c => <div>{c.name}
+          countries.map(c => 
+          <div>{c.name}
           {c.nativeName}
           {c.capital}
           {c.currencies}
