@@ -22,4 +22,12 @@ import axios from 'axios';
     });
   };
 
+  export const login = function(userData){
+    return axios.post("/api/auth/signin", userData)
+  }
+
+  export const test = function(){
+    return axios.post("/api/auth/test")
+  }
+
 

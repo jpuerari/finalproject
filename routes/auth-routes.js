@@ -1,10 +1,15 @@
 const router = require('express').Router();
 const jwt = require('jsonwebtoken');
-const User = require('../../models/User');
+const User = require('../models/User');
+
+router.post("/test", (req, res)=>{
+  console.log("test worked inside the auth file");
+  res.json(true)
+})
 
 // SIGN IN AND AUTHENTICATE A USER
 // '/api/auth'
-router.post('/', (req, res) => {
+router.post("/signin", (req, res) => {
   // retrieve user from db by email
   User.findOne({
       username: req.body.username
