@@ -46,4 +46,9 @@ export const cityName = search => axios({
   "params": {
     "namePrefix": search,
   }
+
 })
+
+// export const searchGoogleBooks = function (query) {
+//   return axios.get(https://maps.googleapis.com/maps/api/place/photo?', { params: { q: query } });
+// };
