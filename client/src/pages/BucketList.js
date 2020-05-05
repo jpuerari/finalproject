@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect } from "react";
 import { Jumbotron, Container, Row, Col, Form, Card, Button, CardColumns, Collapse } from 'react-bootstrap';
 import Navbar from '../components/Navbar';
 
@@ -6,18 +6,28 @@ import SavedCountryContext from '../utils/SavedCountryContext';
 
 import * as API from '../utils/API';
 
-
+import { savedCountries, searchCountries, getSavedCountries} from '../utils/API';
 
 
 
 
 function BucketList(){
-  const { books: saveCountries, getCoutry } = useContext(SavedCountryContext);
+  const { countries: savedCountries, getSavedCountries } = useContext(SavedCountryContext);
+useEffect(()=> {
+savedCountries()
+.then(data => {
+  console.log(data)
+})
+
+},[])
+  console.log(getSavedCountries)
+
+
 
   // create function that accepts the book's mongo _id value as param and deletes the book from the database
   const handleDeleteCountry = (mongoId) => {
     API.deleteCountry(mongoId)
-      .then(() => getCoutry())
+      .then(() => getSavedCountries ())
       .catch((err) => console.log(err));
   };
 
@@ -37,7 +47,7 @@ function BucketList(){
         
       <Container fluid>
         <CardColumns>
-          {saveCountries.map((country) => {
+          {savedCountries.map((country) => {
             return (
               <Card key={country._id} border='dark'>
                <Card.Body>

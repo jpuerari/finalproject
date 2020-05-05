@@ -4,7 +4,7 @@ import axios from 'axios';
     return axios.get('/api/countries');
   };
 
-  export const saveCountries = function (countryData) {
+  export const savedCountries = function (countryData) {
     return axios.post('/api/contries', countryData);
   };
   export const deleteCountry = function (countryId) {
