@@ -1,5 +1,6 @@
 //imports
 import React, { Component } from "react";
+import {login, test} from "../utils/API";
 
 //regex to help with form validation
 const Regex = RegExp(
@@ -47,7 +48,20 @@ class Login extends Component {
     // } else {
     //   console.error("error");
     // }
-    this.props.history.push("/places")
+    login({username: this.state.usr, password: this.state.password})
+    .then(res=>{
+      //if everything works and you're logged in now
+      //res will be the jwt token
+      //save user info somewhere
+      console.log(res)
+      this.props.history.push("/places")
+    })
+    .catch(err=>{
+      console.log(err.message);
+      //let user know somehow they did bad
+      alert("you entered wrong info")
+    })
+
   };
 
   changeHandle = e => {

@@ -35,6 +35,16 @@ export const openWeather = search => axios({
   }
 })
 
+
+  export const login = function(userData){
+    return axios.post("/api/auth/signin", userData)
+  }
+
+  export const test = function(){
+    return axios.post("/api/auth/test")
+  }
+
+
 export const cityName = search => axios({
   "method": "GET",
   "url": "https://wft-geo-db.p.rapidapi.com/v1/geo/cities",
@@ -46,6 +56,7 @@ export const cityName = search => axios({
   "params": {
     "namePrefix": search,
   }
+
 
 })
 
