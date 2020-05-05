@@ -3,8 +3,8 @@ const {
   createUser,
   getAllUsers,
   getSingleUser,
-  saveBook,
-  deleteBook,
+  savePlace,
+  deletePlace,
   login,
 } = require('../../controllers/user-controller');
 

@@ -111,7 +111,6 @@ function Places() {
           </Form.Row>
         </Form>
 
-      </Container>
 
       <Container style={{ marginTop: '20px' }} fluid>
         <h2>{countries.length ? `Viewing ${countries.length} results:` : 'Search for a country to begin'}</h2>
