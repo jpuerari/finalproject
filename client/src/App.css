@@ -12,6 +12,7 @@ body{
 
 
 h1{
+    
     text-align: center;
     font-size: 75px;
 }
@@ -29,3 +30,9 @@ h1{
     width: 60%;
 }
 
+h2{
+    padding: 50px;
+    float: left ;
+    color: white;
+    text-align: center;
+}

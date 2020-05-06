@@ -4,7 +4,10 @@ import Navbar from '../components/Navbar';
 
 import SavedCountryContext from '../utils/SavedCountryContext';
 
-import { saveCountries, searchCountries} from '../utils/API';
+import { savedCountries, searchCountries, getSavedCountries } from '../utils/API';
+
+
+
 
 function Places() {
   // create state for holding returned  api data 
@@ -14,7 +17,8 @@ function Places() {
 
   const { countries: savedCountries, getSavedCountries } = useContext(SavedCountryContext);
 
-  console.log(savedCountries)
+  console.log(countries);
+  console.log(savedCountries);
 
 
 
@@ -30,22 +34,44 @@ function Places() {
 
         console.log(response.data)
         setCountries(response.data)
-     
+
       })
       .catch(err => console.warn(err))
-  }
+
+
+    searchCountries(searchInput)
+      .then(({ data }) => {
+        const countryData = data.items.map((country) => ({
+          countryId: country.id,
+          nativeName: country.volumeInfo.nativeName,
+          name: country.volumeInfo.name || ['No country to display'],
+          capital: country.volumeInfo.capital,
+          currencies: country.volumeInfo.currencies,
+          languages: country.volumeInfo.languages
+        }));
+        console.log(countryData);
+
+        return setCountries(countryData);
+      })
+      .then(() => setCountries(''))
+      .catch((err) => console.log(err));
+  };
+
+
+
+
 
 
   // create function to handle saving a country to our database
   const handleSaveCountries = (countryId) => {
-   
-      const countryToSave = searchCountries.find((country) => country.countryId === countryId);
 
-    
-      saveCountries(countryToSave)
-        .then(() => (getSavedCountries))
-        .catch((err) => console.log(err));
-   };
+    const countryToSave = searchCountries.find((country) => country.countryId === countryId);
+
+
+    savedCountries(countryToSave)
+      .then(() => (getSavedCountries))
+      .catch((err) => console.log(err));
+  };
   // find the country in `searchedCountries` state by the matching id
 
 
@@ -85,16 +111,48 @@ function Places() {
           </Form.Row>
         </Form>
 
-        {
-          countries.map(c => 
-          <div>{c.name}
-          {c.nativeName}
-          {c.capital}
-          {c.currencies}
-          {c.languages}</div>)
-          
-        }
+
+      <Container style={{ marginTop: '20px' }} fluid>
+        <h2>{countries.length ? `Viewing ${countries.length} results:` : 'Search for a country to begin'}</h2>
+        <CardColumns>
+          {countries.map((country) => {
+
+            return (
+              <Card key={country.countryId} border='dark'>
+                <Card.Body>
+                  <Card.Title>{country.name}</Card.Title>
+                  <Card.Text className='small'>Native Name: {country.nativeName}</Card.Text>
+
+                  <Card.Text className='small'>Capital: {country.capital} </Card.Text>
+
+                  <Card.Text className='small'>Currencies Name: {country.currencies}</Card.Text>
+
+                  <Card.Text className='small'>Languages Name: {country.languages}</Card.Text>
+                  {savedCountries.length ? (
+                    <Button
+                      disabled={savedCountries.some((savedCountries) => savedCountries.countryId === country.countryId)}
+                      className='btn-block btn-info'
+                      onClick={() => handleSaveCountries(country.countryId)}>
+                      {savedCountries.some((savedCountries) => savedCountries.countryId === country.countryId)
+                        ? 'This country has already been saved!'
+                        : 'Save this country!'}
+                    </Button>
+                  ) : (
+                      <Button
+
+                        className='btn-block btn-info'
+                        onClick={() => handleSaveCountries(country.countryId)}>
+                        Save Country
+                 </Button>
+                    )}
+
+                </Card.Body>
+              </Card>
+            );
+          })}
+        </CardColumns>
       </Container>
+
     </>
   )
 
