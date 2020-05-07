@@ -60,6 +60,7 @@ export const cityName = search => axios({
 
 })
 
-// export const searchGoogleBooks = function (query) {
-//   return axios.get(https://maps.googleapis.com/maps/api/place/photo?', { params: { q: query } });
-// };
+// export const searchGoogleImages = function (query) {
+//  return axios.get(
+//  'https://developers.google.com/places/place-id' , { params: { q: query } });
+// }
