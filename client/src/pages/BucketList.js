@@ -15,18 +15,18 @@ import AuthService from '../utils/auth';
 
 
 
-function BucketList(){
+function BucketList() {
 
   const userData = useContext(UserInfoContext);
 
   const { countries: savedCountries, getSavedCountries } = useContext(SavedCountryContext);
-useEffect(()=> {
-savedCountries()
-.then(data => {
-  console.log(data)
-})
+  useEffect(() => {
+    API.getSavedCountries()
+      .then(data => {
+        console.log(data)
+      })
 
-},[])
+  }, [])
   console.log(getSavedCountries)
 
 
@@ -35,45 +35,45 @@ savedCountries()
   const handleDeleteCountry = (countryId) => {
 
     const token = AuthService.loggedIn() ? AuthService.getToken() : null;
-     
+
     if (!token) {
       return false;
     }
 
-    API.deleteCountry(countryId, token)      
-    .then(() => userData.getUserData())
-    .catch((err) => console.log(err));
+    API.deleteCountry(countryId, token)
+      .then(() => userData.getUserData())
+      .catch((err) => console.log(err));
   };
 
 
 
 
-    return(
-      
+  return (
 
-       <>
-       <Navbar />
-       <Jumbotron fluid className='text-light bg-dark'>
+
+    <>
+      <Navbar />
+      <Jumbotron fluid className='text-light bg-dark'>
         <Container>
           <h1>🛩 My Bucket List 🛩</h1>
         </Container>
       </Jumbotron>
-        
+
       <Container fluid>
-      <h2>
-          {userData.savedCountry.length
+        <h2>
+          {userData.savedCountry ?.length
             ? `Viewing ${userData.savedCountry.length} saved ${userData.savedCountry.length === 1 ? 'country' : 'country'}:`
             : 'You have no saved countries!'}
         </h2>
         <CardColumns>
-        {userData.savedCountry.map((country) => {
+          {userData.savedCountry ?.map((country) => {
             return (
               <Card key={country._id} border='dark'>
-               <Card.Body>
-               <Card.Title>{country.title}</Card.Title>
+                <Card.Body>
+                  <Card.Title>{country.title}</Card.Title>
                   <p className='small'>Native Name: {country.nativeName}</p>
                   <Card.Text>{country.capital}
-                  {country.currencies}{country.languages}</Card.Text>
+                    {country.currencies}{country.languages}</Card.Text>
                   <Button className='btn-block btn-danger' onClick={() => handleDeleteCountry(country._id)}>
                     Delete this Place!
                   </Button>
@@ -82,10 +82,10 @@ savedCountries()
             );
           })}
         </CardColumns>
-        </Container>
-  
-      </>
-    );
+      </Container>
+
+    </>
+  );
 }
 
-export default  BucketList;
+export default BucketList;
