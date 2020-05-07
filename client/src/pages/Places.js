@@ -118,6 +118,9 @@ function Places() {
             </Col>
           </Form.Row>
         </Form>
+
+        {/* i hope i put this in the right place lol -josh */}
+
         </Container>
 
       <Container style={{ marginTop: '20px' }} fluid>
