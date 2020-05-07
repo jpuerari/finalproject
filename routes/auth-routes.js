@@ -11,6 +11,7 @@ router.post("/test", (req, res)=>{
 // '/api/auth'
 router.post("/signin", (req, res) => {
   // retrieve user from db by email
+  console.log("it got here")
   User.findOne({
       username: req.body.username
     }).then(user => {
@@ -23,7 +24,7 @@ router.post("/signin", (req, res) => {
 
     // check if user's password matches req.body.password
     const passwordMatch = user.comparePassword(req.body.password);
-
+    console.log(passwordMatch)
     // if passwordMatch is true, sign JWT and give user token
     if (passwordMatch) {
       //jwt.sign(userdata, secretkey)
@@ -48,5 +49,11 @@ router.post("/signin", (req, res) => {
     // if not, let them know it's a wrong pw
   });
 });
+
+router.post("/addUser", (req, res)=>{
+  User.create(req.body)
+  .then(data=>res.json(data))
+  .catch(err=>console.log(err))
+})
 
 module.exports = router; 

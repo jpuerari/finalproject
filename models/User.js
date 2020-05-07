@@ -19,7 +19,15 @@ const UserSchema = new Schema({
     type: String,
     required: true,
   },
+<<<<<<< HEAD
   savedPlaces: [placeSchema],
+=======
+  savedCountries: {
+    type: [String],
+    default: []
+  },
+  countryCount: Number
+>>>>>>> 319ba669747515436c8aa6de59477b6dd50b9f39
 });
 
 UserSchema.pre("save", function (next) {
@@ -30,11 +38,15 @@ UserSchema.pre("save", function (next) {
 
 });
 
-UserSchema.methods.comparePassword = function (candidatePassword, cb) {
-  bcrypt.compare(candidatePassword, this.password, function (err, isMatch) {
-    if (err) return cb(err);
-    cb(null, isMatch);
-  });
+// UserSchema.methods.comparePassword = function (candidatePassword, cb) {
+//   bcrypt.compare(candidatePassword, this.password, function (err, isMatch) {
+//     if (err) return cb(err);
+//     cb(null, isMatch);
+//   });
+// };
+
+UserSchema.methods.comparePassword = async function (password) {
+  return bcrypt.compare(password, this.password);
 };
 
 const User = mongoose.model("User", UserSchema);
