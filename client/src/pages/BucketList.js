@@ -4,14 +4,21 @@ import Navbar from '../components/Navbar';
 
 import SavedCountryContext from '../utils/SavedCountryContext';
 
+import UserInfoContext from '../utils/UserInfoContext';
+
+
 import * as API from '../utils/API';
 
-import { savedCountries, searchCountries, getSavedCountries} from '../utils/API';
+import AuthService from '../utils/auth';
+
 
 
 
 
 function BucketList(){
+
+  const userData = useContext(UserInfoContext);
+
   const { countries: savedCountries, getSavedCountries } = useContext(SavedCountryContext);
 useEffect(()=> {
 savedCountries()
@@ -25,10 +32,17 @@ savedCountries()
 
 
   // create function that accepts the book's mongo _id value as param and deletes the book from the database
-  const handleDeleteCountry = (mongoId) => {
-    API.deleteCountry(mongoId)
-      .then(() => getSavedCountries ())
-      .catch((err) => console.log(err));
+  const handleDeleteCountry = (countryId) => {
+
+    const token = AuthService.loggedIn() ? AuthService.getToken() : null;
+     
+    if (!token) {
+      return false;
+    }
+
+    API.deleteCountry(countryId, token)      
+    .then(() => userData.getUserData())
+    .catch((err) => console.log(err));
   };
 
 
@@ -46,8 +60,13 @@ savedCountries()
       </Jumbotron>
         
       <Container fluid>
+      <h2>
+          {userData.savedCountry.length
+            ? `Viewing ${userData.savedCountry.length} saved ${userData.savedCountry.length === 1 ? 'country' : 'country'}:`
+            : 'You have no saved countries!'}
+        </h2>
         <CardColumns>
-          {savedCountries.map((country) => {
+        {userData.savedCountry.map((country) => {
             return (
               <Card key={country._id} border='dark'>
                <Card.Body>
