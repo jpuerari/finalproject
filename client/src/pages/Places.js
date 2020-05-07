@@ -118,6 +118,12 @@ function Places() {
             </Col>
           </Form.Row>
         </Form>
+<<<<<<< HEAD
+=======
+
+        {/* i hope i put this in the right place lol -josh */}
+
+>>>>>>> e615a9421f7f6815e15d0201cf80e771da528ba0
         </Container>
 
       <Container style={{ marginTop: '20px' }} fluid>
