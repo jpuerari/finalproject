@@ -1,6 +1,7 @@
 const mongoose = require("mongoose");
 
 const bcrypt = require('bcrypt');
+const placeSchema = require('./Place');
 const SALT_WORK_FACTOR = 5;
 
 const Schema = mongoose.Schema;
@@ -18,6 +19,7 @@ const UserSchema = new Schema({
     type: String,
     required: true,
   },
+  savedPlaces: [placeSchema],
 });
 
 UserSchema.pre("save", function (next) {

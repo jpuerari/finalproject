@@ -2,6 +2,8 @@ import React, { useState, useContext } from "react";
 import { Jumbotron, Container, Row, Col, Form, Card, Button, CardColumns, Collapse } from 'react-bootstrap';
 import Navbar from '../components/Navbar';
 
+import UserInfoContext from '../utils/UserInfoContext';
+import AuthService from '../utils/auth';
 import SavedCountryContext from '../utils/SavedCountryContext';
 
 import { savedCountries, searchCountries, getSavedCountries } from '../utils/API';
@@ -20,7 +22,7 @@ function Places() {
   console.log(countries);
   console.log(savedCountries);
 
-
+  const userData = useContext(UserInfoContext);
 
 
   const handleFormSubmit = event => {
@@ -67,10 +69,16 @@ function Places() {
 
     const countryToSave = searchCountries.find((country) => country.countryId === countryId);
 
+    const token = AuthService.loggedIn() ? AuthService.getToken() : null;
 
-    savedCountries(countryToSave)
-      .then(() => (getSavedCountries))
-      .catch((err) => console.log(err));
+    if (!token) {
+      return false;
+    }
+
+
+    savedCountries(countryToSave, token) 
+    .then(() => userData.getUserData())
+    .catch((err) => console.log(err));
   };
   // find the country in `searchedCountries` state by the matching id
 
@@ -110,7 +118,7 @@ function Places() {
             </Col>
           </Form.Row>
         </Form>
-
+        </Container>
 
       <Container style={{ marginTop: '20px' }} fluid>
         <h2>{countries.length ? `Viewing ${countries.length} results:` : 'Search for a country to begin'}</h2>
@@ -128,24 +136,16 @@ function Places() {
                   <Card.Text className='small'>Currencies Name: {country.currencies}</Card.Text>
 
                   <Card.Text className='small'>Languages Name: {country.languages}</Card.Text>
-                  {savedCountries.length ? (
+                  {userData.username && (
                     <Button
-                      disabled={savedCountries.some((savedCountries) => savedCountries.countryId === country.countryId)}
-                      className='btn-block btn-info'
-                      onClick={() => handleSaveCountries(country.countryId)}>
-                      {savedCountries.some((savedCountries) => savedCountries.countryId === country.countryId)
-                        ? 'This country has already been saved!'
-                        : 'Save this country!'}
+                    disabled={userData.savedCountry?.some((savedCountry) => savedCountry.countryId === country.countryId)}
+                    className='btn-block btn-info'
+                    onClick={() => handleSaveCountries(country.countryId)}>
+                    {userData.savedCountry?.some((savedCountry) => savedCountry.countryId === country.countryId)
+                      ? 'This country has already been saved!'
+                      : 'Save this country!'}
                     </Button>
-                  ) : (
-                      <Button
-
-                        className='btn-block btn-info'
-                        onClick={() => handleSaveCountries(country.countryId)}>
-                        Save Country
-                 </Button>
-                    )}
-
+                    )} 
                 </Card.Body>
               </Card>
             );
@@ -153,7 +153,7 @@ function Places() {
         </CardColumns>
       </Container>
 
-    </>
+      </>
   )
 
 }
