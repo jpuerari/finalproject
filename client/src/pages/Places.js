@@ -145,7 +145,7 @@ function Places() {
                   <Card.Text className='small'>Currencies Name: {country.currencies}</Card.Text>
 
                   <Card.Text className='small'>Languages Name: {country.languages}</Card.Text>
-                  {userData.username && (
+                 
                     <Button
                     disabled={userData.savedCountry?.some((savedCountry) => savedCountry.countryId === country.countryId)}
                     className='btn-block btn-info'
@@ -154,7 +154,7 @@ function Places() {
                       ? 'This country has already been saved!'
                       : 'Save this country!'}
                     </Button>
-                    )} 
+                    
                 </Card.Body>
               </Card>
             );
