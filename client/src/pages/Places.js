@@ -119,7 +119,13 @@ function Places() {
           </Form.Row>
         </Form>
 
+
         {/* i hope i put this in the right place lol -josh */}
+
+
+
+        {/* i hope i put this in the right place lol -josh */}
+
 
         </Container>
 
