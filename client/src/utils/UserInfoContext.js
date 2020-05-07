@@ -6,7 +6,7 @@ import React from 'react';
 const UserInfoContext = React.createContext({
   savedCountries: [],
   username: '',
-  email: '',
+  name: '',
   countryCount: 0,
   getUserData: () => undefined,
 });

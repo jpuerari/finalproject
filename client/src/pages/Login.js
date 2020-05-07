@@ -52,8 +52,12 @@ class Login extends Component {
     .then(res=>{
       //if everything works and you're logged in now
       //res will be the jwt token
-      //save user info somewhere
+      //save user info somewhere probably app.js
+      //access that info on other pages by sending it from app.js
       console.log(res)
+      
+
+
       this.props.history.push("/places")
     })
     .catch(err=>{
