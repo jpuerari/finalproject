@@ -21,6 +21,7 @@ const UserSchema = new Schema({
   },
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
   savedPlaces: [placeSchema],
 =======
 =======
@@ -28,16 +29,28 @@ const UserSchema = new Schema({
   savedPlaces: [placeSchema],
 
 >>>>>>> e615a9421f7f6815e15d0201cf80e771da528ba0
+=======
+
+  savedPlaces: [placeSchema],
+
+  savedPlaces: [placeSchema],
+
+
+>>>>>>> 0ba8aac019ba57593731f4ec8c0fab26f85ef8cf
   savedCountries: {
     type: [String],
     default: []
   },
   countryCount: Number
 <<<<<<< HEAD
+<<<<<<< HEAD
 >>>>>>> 319ba669747515436c8aa6de59477b6dd50b9f39
 =======
 
 >>>>>>> e615a9421f7f6815e15d0201cf80e771da528ba0
+=======
+
+>>>>>>> 0ba8aac019ba57593731f4ec8c0fab26f85ef8cf
 });
 
 UserSchema.pre("save", function (next) {
