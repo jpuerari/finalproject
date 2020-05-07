@@ -19,15 +19,18 @@ const UserSchema = new Schema({
     type: String,
     required: true,
   },
-<<<<<<< HEAD
+
   savedPlaces: [placeSchema],
-=======
+
+  savedPlaces: [placeSchema],
+
+
   savedCountries: {
     type: [String],
     default: []
   },
   countryCount: Number
->>>>>>> 319ba669747515436c8aa6de59477b6dd50b9f39
+
 });
 
 UserSchema.pre("save", function (next) {
