@@ -22,6 +22,9 @@ const UserSchema = new Schema({
 
   savedPlaces: [placeSchema],
 
+  savedPlaces: [placeSchema],
+
+
   savedCountries: {
     type: [String],
     default: []
