@@ -6,7 +6,7 @@ import UserInfoContext from '../utils/UserInfoContext';
 import AuthService from '../utils/auth';
 import SavedCountryContext from '../utils/SavedCountryContext';
 
-import { savedCountries, searchCountries, getSavedCountries } from '../utils/API';
+import { savedCountries, searchCountries, getSavedCountries, openWeather, cityName } from '../utils/API';
 
 
 
@@ -14,6 +14,13 @@ import { savedCountries, searchCountries, getSavedCountries } from '../utils/API
 function Places() {
   // create state for holding returned  api data 
   const [countries, setCountries] = useState([]);
+   // create state to hold returned api data for cityName function
+   const [cities, setCities] = useState([]);
+    // create state for storing and setting photo URL from google photos api
+  const [locationPhoto, setLocationPhoto] = useState('');
+    // create state to hold weather and set weather data
+    const [weatherData, setWeatherData] = useState([]);
+
   // create styate for holding our search field data
   const [searchInput, setSearchInput] = useState('');
 
@@ -31,6 +38,31 @@ function Places() {
     if (!searchInput) {
       return false;
     }
+
+    // GET API.getPhoto(searchInput) her
+
+
+    // GET weatherdata through openWeather
+    // openWeather(searchInput).then().catch()
+    openWeather(searchInput)
+        .then(response => {
+          console.log(response.data)
+          setWeatherData(response.data)
+        })
+        .catch(err => console.warn(err))
+
+    // GET city data
+    // cityName(searchInput).then().catch()
+    cityName(searchInput)
+        .then(response => {
+          console.log(response.data)
+          setCities(response.data)
+         })
+         .catch(err => console.warn(err))
+
+
+    // SEARCH FOR COUNTRY DATA
+
     searchCountries(searchInput)
       .then(response => {
 
