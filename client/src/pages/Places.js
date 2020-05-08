@@ -6,7 +6,7 @@ import UserInfoContext from '../utils/UserInfoContext';
 import AuthService from '../utils/auth';
 import SavedCountryContext from '../utils/SavedCountryContext';
 
-import { savedCountries, searchCountries, getSavedCountries } from '../utils/API';
+import { savedCountries, searchCountries, getSavedCountries, openWeather, cityName } from '../utils/API';
 
 
 
@@ -14,6 +14,13 @@ import { savedCountries, searchCountries, getSavedCountries } from '../utils/API
 function Places() {
   // create state for holding returned  api data 
   const [countries, setCountries] = useState([]);
+   // create state to hold returned api data for cityName function
+   const [cities, setCities] = useState([]);
+    // create state for storing and setting photo URL from google photos api
+  const [locationPhoto, setLocationPhoto] = useState('');
+    // create state to hold weather and set weather data
+    const [weatherData, setWeatherData] = useState([]);
+
   // create styate for holding our search field data
   const [searchInput, setSearchInput] = useState('');
 
@@ -31,6 +38,47 @@ function Places() {
     if (!searchInput) {
       return false;
     }
+
+    // GET API.getPhoto(searchInput) her
+
+
+    // GET weatherdata through openWeather
+    // openWeather(searchInput).then().catch()
+    openWeather(searchInput)
+        .then(response => {
+          console.log(response.data)
+          setWeatherData(response.data)
+        })
+        .catch(err => console.warn(err))
+
+    // GET city data
+    // cityName(searchInput).then().catch()
+    cityName(searchInput)
+        .then(response => {
+          console.log(response.data)
+          setCities(response.data)
+         })
+         .catch(err => console.warn(err))
+
+         cityName(searchInput)
+         .then(({ data }) => {
+           const cityData = data.items.map((cities) => ({
+         
+           }));
+           console.log(cityData);
+   
+           return setCities(cityData);
+         })
+         .then(() => setCountries(''))
+         .catch((err) => console.log(err));
+
+
+
+         
+
+
+    // SEARCH FOR COUNTRY DATA
+
     searchCountries(searchInput)
       .then(response => {
 
@@ -49,7 +97,8 @@ function Places() {
           name: country.volumeInfo.name || ['No country to display'],
           capital: country.volumeInfo.capital,
           currencies: country.volumeInfo.currencies,
-          languages: country.volumeInfo.languages
+          languages: country.volumeInfo.languages,
+          
         }));
         console.log(countryData);
 
@@ -145,7 +194,7 @@ function Places() {
                   <Card.Text className='small'>Currencies Name: {country.currencies}</Card.Text>
 
                   <Card.Text className='small'>Languages Name: {country.languages}</Card.Text>
-                  {userData.username && (
+                 
                     <Button
                     disabled={userData.savedCountry?.some((savedCountry) => savedCountry.countryId === country.countryId)}
                     className='btn-block btn-info'
@@ -154,7 +203,7 @@ function Places() {
                       ? 'This country has already been saved!'
                       : 'Save this country!'}
                     </Button>
-                    )} 
+                    
                 </Card.Body>
               </Card>
             );
