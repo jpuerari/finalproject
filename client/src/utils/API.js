@@ -60,6 +60,10 @@ export const cityName = search => axios({
 
 })
 
+export const getMe = function (token) {
+  return axios.get('/api/auth/me', { headers: { authorization: `Bearer ${token}` } });
+};
+
 // export const searchGoogleBooks = function (query) {
 //   return axios.get(https://maps.googleapis.com/maps/api/place/photo?', { params: { q: query } });
 // };
