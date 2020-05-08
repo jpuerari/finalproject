@@ -1,5 +1,7 @@
 // import places model
-const { Place } = require('../models');
+const { Place } = require('../models/Place');
+
+
 
 module.exports = {
   async getAllPlaces(req, res) {

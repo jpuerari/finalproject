@@ -60,6 +60,22 @@ function Places() {
          })
          .catch(err => console.warn(err))
 
+         cityName(searchInput)
+         .then(({ data }) => {
+           const cityData = data.items.map((cities) => ({
+         
+           }));
+           console.log(cityData);
+   
+           return setCities(cityData);
+         })
+         .then(() => setCountries(''))
+         .catch((err) => console.log(err));
+
+
+
+         
+
 
     // SEARCH FOR COUNTRY DATA
 
@@ -81,7 +97,8 @@ function Places() {
           name: country.volumeInfo.name || ['No country to display'],
           capital: country.volumeInfo.capital,
           currencies: country.volumeInfo.currencies,
-          languages: country.volumeInfo.languages
+          languages: country.volumeInfo.languages,
+          
         }));
         console.log(countryData);
 
