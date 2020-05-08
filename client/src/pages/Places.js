@@ -30,7 +30,7 @@ function Places() {
   console.log(savedCountries);
 
   const userData = useContext(UserInfoContext);
-
+  
 
   const handleFormSubmit = event => {
     event.preventDefault();
@@ -144,6 +144,7 @@ function Places() {
       <Jumbotron fluid className='text-light bg-dark'>
         <Container>
           <h1>🛩 Travel Bucket List 🛩</h1>
+          {console.log("userData: ", userData)}
         </Container>
       </Jumbotron>
 

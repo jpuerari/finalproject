@@ -2,6 +2,8 @@
 import React, { Component } from "react";
 import {login, test} from "../utils/API";
 
+import AuthService from '../utils/auth';
+
 //regex to help with form validation
 const Regex = RegExp(
   /^[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/
@@ -49,13 +51,13 @@ class Login extends Component {
     //   console.error("error");
     // }
     login({username: this.state.usr, password: this.state.password})
-    .then(res=>{
+    .then(({data})=>{
       //if everything works and you're logged in now
-      //res will be the jwt token
+      //data will be the jwt token
       //save user info somewhere probably app.js
       //access that info on other pages by sending it from app.js
-      console.log(res)
-      
+      console.log(data)
+      AuthService.login(data.token);
 
 
       this.props.history.push("/places")
