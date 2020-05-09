@@ -57,4 +57,19 @@ export const cityName = search => axios({
     "namePrefix": search,
   }})
 
- 
+ // CREATE THIS IN API.JS
+export function getPhoto(searchTerm) {
+  return axios.get('https://maps.googleapis.com/maps/api/place/findplacefromtext/json', {params: {
+    key: 'AIzaSyBWc5ek5t8mxh_Ja4oZf4GYIsNM-yo3nw4',
+    inputtype: 'textquery',
+    input: searchTerm 
+  }}).then(({data}) => {
+    const placeId = data.candidates[0].place_id;
+    return axios.get('https://maps.googleapis.com/maps/api/place/details/json', {params: {
+      key: 'AIzaSyBWc5ek5t8mxh_Ja4oZf4GYIsNM-yo3nw4',
+      place_id: placeId
+    }})
+  })
+}
+
+

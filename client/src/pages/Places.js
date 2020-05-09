@@ -7,7 +7,7 @@ import AuthService from '../utils/auth';
 import SavedCountryContext from '../utils/SavedCountryContext';
 
 import { savedCountries, searchCountries, getSavedCountries, openWeather, cityName } from '../utils/API';
-
+import Search from './form/search';
 
 
 
