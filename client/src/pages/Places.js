@@ -6,7 +6,7 @@ import UserInfoContext from '../utils/UserInfoContext';
 import AuthService from '../utils/auth';
 import SavedCountryContext from '../utils/SavedCountryContext';
 
-import { savedCountries, searchCountries, getSavedCountries, openWeather, cityName } from '../utils/API';
+import { savedCountries, searchCountries, getSavedCountries, openWeather, cityName, getPhoto } from '../utils/API';
 
 
 
@@ -39,7 +39,27 @@ function Places() {
       return false;
     }
 
-    // GET API.getPhoto(searchInput) her
+    // GET API.getPhoto(searchInput) here
+
+    // RUN THIS FROM HANDLE FORM SUBMIT FUNCTION IN COMPONENT
+getPhoto(searchInput)
+.then(({data}) => {
+  const photoReference = data.result.photos[0].photo_reference;
+  // set photoReference to state
+  const photoUrl = `http://maps.googleapis.com/maps/api/place/photo?key=AIzaSyCjVZg684VufdZZzAGT3XAjvB8rL2OWODU
+  &photoreference=${photoReference}&maxwidth=1000`
+  console.log(photoReference);
+  setLocationPhoto(photoUrl)
+})
+.catch(({data}) => {
+  console.log(data);
+})
+
+
+
+
+
+
 
 
     // GET weatherdata through openWeather
@@ -69,7 +89,7 @@ function Places() {
    
            return setCities(cityData);
          })
-         .then(() => setCountries(''))
+         .then(() => setCities(''))
          .catch((err) => console.log(err));
 
 
