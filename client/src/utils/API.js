@@ -64,6 +64,18 @@ export const getMe = function (token) {
   return axios.get('/api/auth/me', { headers: { authorization: `Bearer ${token}` } });
 };
 
-// export const searchGoogleBooks = function (query) {
-//   return axios.get(https://maps.googleapis.com/maps/api/place/photo?', { params: { q: query } });
-// };
+// CREATE THIS IN API.JS
+export function getPhoto(searchTerm) {
+  return axios.get('http://maps.googleapis.com/maps/api/place/findplacefromtext/json', {params: {
+    key: 'AIzaSyCjVZg684VufdZZzAGT3XAjvB8rL2OWODU',
+    inputtype: 'textquery',
+    input: searchTerm 
+  }}).then(({data}) => {
+    console.log(data);
+    const placeId = data.candidates[0].place_id;
+    return axios.get('http://maps.googleapis.com/maps/api/place/details/json', {params: {
+      key: 'AIzaSyCjVZg684VufdZZzAGT3XAjvB8rL2OWODU',
+      place_id: placeId
+    }})
+  })
+}
