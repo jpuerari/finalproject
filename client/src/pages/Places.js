@@ -44,9 +44,10 @@ function Places() {
     // RUN THIS FROM HANDLE FORM SUBMIT FUNCTION IN COMPONENT
 getPhoto(searchInput)
 .then(({data}) => {
+  console.log('hi from google photos')
   const photoReference = data.result.photos[0].photo_reference;
   // set photoReference to state
-  const photoUrl = `http://maps.googleapis.com/maps/api/place/photo?key=AIzaSyCjVZg684VufdZZzAGT3XAjvB8rL2OWODU
+  const photoUrl = `https://maps.googleapis.com/maps/api/place/photo?key=AIzaSyCjVZg684VufdZZzAGT3XAjvB8rL2OWODU
   &photoreference=${photoReference}&maxwidth=1000`
   console.log(photoReference);
   setLocationPhoto(photoUrl)
@@ -54,12 +55,6 @@ getPhoto(searchInput)
 .catch(({data}) => {
   console.log(data);
 })
-
-
-
-
-
-
 
 
     // GET weatherdata through openWeather
