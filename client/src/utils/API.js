@@ -55,12 +55,22 @@ export const cityName = search => axios({
   },
   "params": {
     "namePrefix": search,
-  }
+  },
 
 
-})
+ // CREATE THIS IN API.JS
+  export: function getPhoto(searchTerm){
+  return axios.get('https://maps.googleapis.com/maps/api/place/findplacefromtext/json', {params: {
+    key: 'AIzaSyCjVZg684VufdZZzAGT3XAjvB8rL2OWODU',
+    inputtype: 'textquery',
+    input: searchTerm
+  }}).then(({data}) => {
+    const placeId = data.candidates[0].place_id;
+    return axios.get('https://maps.googleapis.com/maps/api/place/details/json', {params: {
+      key: 'AIzaSyCjVZg684VufdZZzAGT3XAjvB8rL2OWODU',
+      place_id: placeId
+    }})
+  })
+}});
 
-// export const searchGoogleImages = function (query) {
-//  return axios.get(
-//  'https://developers.google.com/places/place-id' , { params: { q: query } });
-// }
+
