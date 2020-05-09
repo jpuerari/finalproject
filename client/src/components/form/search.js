@@ -1,4 +1,4 @@
-API.getPhoto(searchTerm)
+/* API.getPhoto(searchTerm)
   .then(({data}) => {
     const photoReference = data.result.photos[0].photo_reference;
     // set photoReference to state
@@ -8,4 +8,4 @@ API.getPhoto(searchTerm)
   })
   .catch(({data}) => {
     console.log(data);
-  })
+  }) */
