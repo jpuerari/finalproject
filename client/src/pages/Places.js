@@ -8,8 +8,7 @@ import SavedCountryContext from '../utils/SavedCountryContext';
 
 import { savedCountries, searchCountries, getSavedCountries, openWeather, cityName, getPhoto } from '../utils/API';
 
-
-
+import SavedCityContext from '../utils/SavedCityContext';
 
 function Places() {
   // create state for holding returned  api data 
@@ -25,6 +24,11 @@ function Places() {
   const [searchInput, setSearchInput] = useState('');
 
   const { countries: savedCountries, getSavedCountries } = useContext(SavedCountryContext);
+
+  const { cities: savedCities, getSavedCities } = useContext(SavedCityContext);
+
+  console.log(cities);
+  console.log(savedCities);
 
   console.log(countries);
   console.log(savedCountries);
@@ -46,13 +50,14 @@ getPhoto(searchInput)
 .then(({data}) => {
   const photoReference = data.result.photos[0].photo_reference;
   // set photoReference to state
+  console.log(data);
   const photoUrl = `http://maps.googleapis.com/maps/api/place/photo?key=AIzaSyCjVZg684VufdZZzAGT3XAjvB8rL2OWODU
   &photoreference=${photoReference}&maxwidth=1000`
   console.log(photoReference);
   setLocationPhoto(photoUrl)
 })
-.catch(({data}) => {
-  console.log(data);
+.catch((err) => {
+  console.log(err);
 })
 
 
@@ -83,7 +88,7 @@ getPhoto(searchInput)
          cityName(searchInput)
          .then(({ data }) => {
            const cityData = data.items.map((cities) => ({
-         
+            cityId: cityName.id,
            }));
            console.log(cityData);
    
@@ -149,6 +154,22 @@ getPhoto(searchInput)
     .then(() => userData.getUserData())
     .catch((err) => console.log(err));
   };
+
+  const handleSaveCity= (cityId) => {
+
+    const cityToSave = cityName.find((city) => city.cityId === cityId);
+
+    const token = AuthService.loggedIn() ? AuthService.getToken() : null;
+
+    if (!token) {
+      return false;
+    }
+
+
+    cityName(cityToSave, token) 
+    .then(() => userData.getUserData())
+    .catch((err) => console.log(err));
+  };
   // find the country in `searchedCountries` state by the matching id
 
 
@@ -178,7 +199,7 @@ getPhoto(searchInput)
                 onChange={(e) => setSearchInput(e.target.value)}
                 type='text'
                 size='lg'
-                placeholder='✈️  Search for a Place'
+                placeholder='✈️  Search for a Country'
               />
             </Col>
             <Col xs={12} md={4}>
@@ -199,15 +220,52 @@ getPhoto(searchInput)
 
         </Container>
 
-      <Container style={{ marginTop: '20px' }} fluid>
-        <h2>{countries.length ? `Viewing ${countries.length} results:` : 'Search for a country to begin'}</h2>
+      <br></br>
+      <br></br>
+      
+
+      <Container padding='5px'>
+        <Form onSubmit={handleFormSubmit}>
+          <Form.Row className='justify-content-center'>
+            <Col xs={12} md={8}>
+              <Form.Control
+                name='searchInput'
+                value={searchInput}
+                onChange={(e) => setSearchInput(e.target.value)}
+                type='text'
+                size='lg'
+                placeholder='✈️  Search for a City'
+              />
+            </Col>
+            <Col xs={12} md={4}>
+              <Button type='submit' variant='danger' size='lg'>
+                Submit Search
+                  </Button>
+            </Col>
+          </Form.Row>
+        </Form>
+
+
+        {/* i hope i put this in the right place lol -josh */}
+
+
+
+        {/* i hope i put this in the right place lol -josh */}
+
+
+        </Container>
+
+      <Container className='justify-content-center' style={{ marginTop: '20px' }} fluid>
+        <h2 >{countries.length ? ` Viewing ${countries.length} results:` : 'Search for a Place to begin'}</h2>
         <CardColumns>
           {countries.map((country) => {
 
             return (
-              <Card key={country.countryId} border='dark'>
+              <Card key={country.countryId} border='dark' >
+                {country.image ? <Card.Img src={country.image} alt={`The cover for ${country.title}`} variant='top' /> : null}
                 <Card.Body>
                   <Card.Title>{country.name}</Card.Title>
+
                   <Card.Text className='small'>Native Name: {country.nativeName}</Card.Text>
 
                   <Card.Text className='small'>Capital: {country.capital} </Card.Text>
@@ -221,6 +279,36 @@ getPhoto(searchInput)
                     className='btn-block btn-info'
                     onClick={() => handleSaveCountries(country.countryId)}>
                     {userData.savedCountry?.some((savedCountry) => savedCountry.countryId === country.countryId)
+                      ? 'This country has already been saved!'
+                      : 'Save this country!'}
+                    </Button>
+                    
+                </Card.Body>
+              </Card>
+            );
+          })}
+        </CardColumns>
+      </Container>
+
+
+      <Container style={{ marginTop: '20px' }} fluid>
+        <CardColumns>
+          {cities.map((city) => {
+
+            return (
+              <Card key={city.cityId} border='dark' >
+                {city.image ? <Card.Img src={city.image} alt={`The cover for ${city.title}`} variant='top' /> : null}
+                <Card.Body>
+                  <Card.Title>{city.name}</Card.Title>
+
+                  <Card.Text className='small'>openWeather: {city.openweather}</Card.Text>
+
+                 
+                    <Button
+                    disabled={userData.cityName?.some((cityName) => cityName.cityId === city.cityId)}
+                    className='btn-block btn-info'
+                    onClick={() => handleSaveCity(city.cityId)}>
+                    {userData.cityName?.some((cityName) => cityName.cityId === city.cityId)
                       ? 'This country has already been saved!'
                       : 'Save this country!'}
                     </Button>
