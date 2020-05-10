@@ -6,6 +6,8 @@ import UserInfoContext from '../utils/UserInfoContext';
 import AuthService from '../utils/auth';
 import SavedCountryContext from '../utils/SavedCountryContext';
 
+import SavedCityContext from '../utils/SavedCityContext';
+
 import { savedCountries, searchCountries, getSavedCountries, openWeather, cityName } from '../utils/API';
 
 
@@ -25,6 +27,11 @@ function Places() {
   const [searchInput, setSearchInput] = useState('');
 
   const { countries: savedCountries, getSavedCountries } = useContext(SavedCountryContext);
+
+  const { cities: savedCities, getSavedCities } = useContext(SavedCityContext);
+
+  console.log(cities);
+  console.log(savedCities);
 
   console.log(countries);
   console.log(savedCountries);
@@ -63,13 +70,13 @@ function Places() {
          cityName(searchInput)
          .then(({ data }) => {
            const cityData = data.items.map((cities) => ({
-         
+            cityId: cityName.id,
            }));
            console.log(cityData);
    
            return setCities(cityData);
          })
-         .then(() => setCountries(''))
+         .then(() => setCities(''))
          .catch((err) => console.log(err));
 
 
