@@ -1,6 +1,16 @@
 const router = require('express').Router();
 const jwt = require('jsonwebtoken');
 const User = require('../models/User');
+const { authMiddleware } = require('../utils/auth');
+
+const {
+  createUser,
+  getAllUsers,
+  getSingleUser,
+  saveBook,
+  deleteBook,
+  login,
+} = require('../controllers/user-controller');
 
 router.post("/test", (req, res)=>{
   console.log("test worked inside the auth file");
@@ -33,13 +43,13 @@ router.post("/signin", (req, res) => {
           exp: Math.floor(Date.now() / 1000) + 60 * 60,
           data: {
             username: user.username,
-            id: user.id
+            _id: user.id
           }
         },
-        'shhhhh'
+        'mysecretsshhhhh'
       );
 
-      res.json(token);
+      res.json({token, user});
     } else {
       res.status(400).json({
         message: 'You entered the wrong pw'
@@ -50,10 +60,13 @@ router.post("/signin", (req, res) => {
   });
 });
 
+// localhost:3001/api/auth/addUser
 router.post("/addUser", (req, res)=>{
   User.create(req.body)
   .then(data=>res.json(data))
   .catch(err=>console.log(err))
 })
+
+router.get("/me", authMiddleware, getSingleUser)
 
 module.exports = router; 
