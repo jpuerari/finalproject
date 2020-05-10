@@ -220,40 +220,6 @@ getPhoto(searchInput)
 
         </Container>
 
-      <br></br>
-      <br></br>
-      
-
-      <Container padding='5px'>
-        <Form onSubmit={handleFormSubmit}>
-          <Form.Row className='justify-content-center'>
-            <Col xs={12} md={8}>
-              <Form.Control
-                name='searchInput'
-                value={searchInput}
-                onChange={(e) => setSearchInput(e.target.value)}
-                type='text'
-                size='lg'
-                placeholder='✈️  Search for a City'
-              />
-            </Col>
-            <Col xs={12} md={4}>
-              <Button type='submit' variant='danger' size='lg'>
-                Submit Search
-                  </Button>
-            </Col>
-          </Form.Row>
-        </Form>
-
-
-        {/* i hope i put this in the right place lol -josh */}
-
-
-
-        {/* i hope i put this in the right place lol -josh */}
-
-
-        </Container>
 
       <Container className='justify-content-center' style={{ marginTop: '20px' }} fluid>
         <h2 >{countries.length ? ` Viewing ${countries.length} results:` : 'Search for a Place to begin'}</h2>
@@ -291,34 +257,7 @@ getPhoto(searchInput)
       </Container>
 
 
-      <Container style={{ marginTop: '20px' }} fluid>
-        <CardColumns>
-          {cities.map((city) => {
-
-            return (
-              <Card key={city.cityId} border='dark' >
-                {city.image ? <Card.Img src={city.image} alt={`The cover for ${city.title}`} variant='top' /> : null}
-                <Card.Body>
-                  <Card.Title>{city.name}</Card.Title>
-
-                  <Card.Text className='small'>openWeather: {city.openweather}</Card.Text>
-
-                 
-                    <Button
-                    disabled={userData.cityName?.some((cityName) => cityName.cityId === city.cityId)}
-                    className='btn-block btn-info'
-                    onClick={() => handleSaveCity(city.cityId)}>
-                    {userData.cityName?.some((cityName) => cityName.cityId === city.cityId)
-                      ? 'This country has already been saved!'
-                      : 'Save this country!'}
-                    </Button>
-                    
-                </Card.Body>
-              </Card>
-            );
-          })}
-        </CardColumns>
-      </Container>
+    
 
       </>
   )
