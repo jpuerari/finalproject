@@ -140,8 +140,8 @@ getPhoto(searchInput)
 
   // create function to handle saving a country to our database
   const handleSaveCountries = (countryId) => {
-
-    const countryToSave = searchCountries.find((country) => country.countryId === countryId);
+    console.log(searchCountries);
+    const countryToSave = countries.find((country) => country.countryId === countryId);
 
     const token = AuthService.loggedIn() ? AuthService.getToken() : null;
 
