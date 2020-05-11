@@ -31,19 +31,16 @@ export const openWeather = search => axios({
   },
   "params": {
     "q": search,
-    "units": "metric or imperial"
+    "units": "imperial"
   }
 })
 
-
-  export const login = function(userData){
-    return axios.post("/api/auth/signin", userData)
-  }
-
-  export const test = function(){
-    return axios.post("/api/auth/test")
-  }
-
+export const login = function(userData){
+  return axios.post("/api/auth/signin", userData)
+}
+export const test = function(){
+  return axios.post("/api/auth/test")
+}
 
 export const cityName = search => axios({
   "method": "GET",
@@ -55,25 +52,24 @@ export const cityName = search => axios({
   },
   "params": {
     "namePrefix": search,
-  }
+  }})
+
+  export const getMe = function (token) {
+    return axios.get('/api/auth/me', { headers: { authorization: `Bearer ${token}` } });
+  };
 
 
-})
-
-export const getMe = function (token) {
-  return axios.get('/api/auth/me', { headers: { authorization: `Bearer ${token}` } });
-};
 
 // CREATE THIS IN API.JS
 export function getPhoto(searchTerm) {
-  return axios.get('http://maps.googleapis.com/maps/api/place/findplacefromtext/json', {params: {
+  return axios.get('https://maps.googleapis.com/maps/api/place/findplacefromtext/json', {params: {
     key: 'AIzaSyCjVZg684VufdZZzAGT3XAjvB8rL2OWODU',
     inputtype: 'textquery',
     input: searchTerm 
   }}).then(({data}) => {
     console.log(data);
     const placeId = data.candidates[0].place_id;
-    return axios.get('http://maps.googleapis.com/maps/api/place/details/json', {params: {
+    return axios.get('https://maps.googleapis.com/maps/api/place/details/json', {params: {
       key: 'AIzaSyCjVZg684VufdZZzAGT3XAjvB8rL2OWODU',
       place_id: placeId
     }})
