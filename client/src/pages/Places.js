@@ -8,8 +8,7 @@ import SavedCountryContext from '../utils/SavedCountryContext';
 
 import { savedCountries, searchCountries, getSavedCountries, openWeather, cityName, getPhoto } from '../utils/API';
 
-
-
+import SavedCityContext from '../utils/SavedCityContext';
 
 function Places() {
   // create state for holding returned  api data 
@@ -25,6 +24,11 @@ function Places() {
   const [searchInput, setSearchInput] = useState('');
 
   const { countries: savedCountries, getSavedCountries } = useContext(SavedCountryContext);
+
+  const { cities: savedCities, getSavedCities } = useContext(SavedCityContext);
+
+  console.log(cities);
+  console.log(savedCities);
 
   console.log(countries);
   console.log(savedCountries);
@@ -47,13 +51,14 @@ getPhoto(searchInput)
   console.log('hi from google photos')
   const photoReference = data.result.photos[0].photo_reference;
   // set photoReference to state
-  const photoUrl = `https://maps.googleapis.com/maps/api/place/photo?key=AIzaSyCjVZg684VufdZZzAGT3XAjvB8rL2OWODU
+  console.log(data);
+  const photoUrl = `http://maps.googleapis.com/maps/api/place/photo?key=AIzaSyCjVZg684VufdZZzAGT3XAjvB8rL2OWODU
   &photoreference=${photoReference}&maxwidth=1000`
   console.log(photoReference);
   setLocationPhoto(photoUrl)
 })
-.catch(({data}) => {
-  console.log(data);
+.catch((err) => {
+  console.log(err);
 })
 
 
@@ -78,7 +83,7 @@ getPhoto(searchInput)
          cityName(searchInput)
          .then(({ data }) => {
            const cityData = data.items.map((cities) => ({
-         
+            cityId: cityName.id,
            }));
            console.log(cityData);
    
@@ -130,8 +135,8 @@ getPhoto(searchInput)
 
   // create function to handle saving a country to our database
   const handleSaveCountries = (countryId) => {
-
-    const countryToSave = searchCountries.find((country) => country.countryId === countryId);
+    console.log(searchCountries);
+    const countryToSave = countries.find((country) => country.countryId === countryId);
 
     const token = AuthService.loggedIn() ? AuthService.getToken() : null;
 
@@ -141,6 +146,22 @@ getPhoto(searchInput)
 
 
     savedCountries(countryToSave, token) 
+    .then(() => userData.getUserData())
+    .catch((err) => console.log(err));
+  };
+
+  const handleSaveCity= (cityId) => {
+
+    const cityToSave = cityName.find((city) => city.cityId === cityId);
+
+    const token = AuthService.loggedIn() ? AuthService.getToken() : null;
+
+    if (!token) {
+      return false;
+    }
+
+
+    cityName(cityToSave, token) 
     .then(() => userData.getUserData())
     .catch((err) => console.log(err));
   };
@@ -173,7 +194,7 @@ getPhoto(searchInput)
                 onChange={(e) => setSearchInput(e.target.value)}
                 type='text'
                 size='lg'
-                placeholder='✈️  Search for a Place'
+                placeholder='✈️  Search for a Country'
               />
             </Col>
             <Col xs={12} md={4}>
@@ -194,15 +215,18 @@ getPhoto(searchInput)
 
         </Container>
 
-      <Container style={{ marginTop: '20px' }} fluid>
-        <h2>{countries.length ? `Viewing ${countries.length} results:` : 'Search for a country to begin'}</h2>
+
+      <Container className='justify-content-center' style={{ marginTop: '20px' }} fluid>
+        <h2 >{countries.length ? ` Viewing ${countries.length} results:` : 'Search for a Place to begin'}</h2>
         <CardColumns>
           {countries.map((country) => {
 
             return (
-              <Card key={country.countryId} border='dark'>
+              <Card key={country.countryId} border='dark' >
+                {country.image ? <Card.Img src={country.image} alt={`The cover for ${country.title}`} variant='top' /> : null}
                 <Card.Body>
                   <Card.Title>{country.name}</Card.Title>
+
                   <Card.Text className='small'>Native Name: {country.nativeName}</Card.Text>
 
                   <Card.Text className='small'>Capital: {country.capital} </Card.Text>
@@ -226,6 +250,9 @@ getPhoto(searchInput)
           })}
         </CardColumns>
       </Container>
+
+
+    
 
       </>
   )

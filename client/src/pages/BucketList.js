@@ -41,6 +41,7 @@ function BucketList() {
     }
 
     API.deleteCountry(countryId, token)
+    // upon succes, update user data to reflect place change
       .then(() => userData.getUserData())
       .catch((err) => console.log(err));
   };
@@ -61,12 +62,12 @@ function BucketList() {
 
       <Container fluid>
         <h2>
-          {userData.savedCountry ?.length
-            ? `Viewing ${userData.savedCountry.length} saved ${userData.savedCountry.length === 1 ? 'country' : 'country'}:`
+          {userData.savedCountries.length
+            ? `Viewing ${userData.savedCountries.length} saved ${userData.savedCountries.length === 1 ? 'country' : 'country'}:`
             : 'You have no saved countries!'}
         </h2>
         <CardColumns>
-          {userData.savedCountry ?.map((country) => {
+          {userData.savedCountries.map((country) => {
             return (
               <Card key={country._id} border='dark'>
                 <Card.Body>
