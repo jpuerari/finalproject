@@ -31,7 +31,7 @@ export const openWeather = search => axios({
   },
   "params": {
     "q": search,
-    "units": "metric or imperial"
+    "units": "imperial"
   }
 })
 
