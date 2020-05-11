@@ -1,14 +1,14 @@
 import axios from 'axios';
 
 export const getSavedCountries = function () {
-  return axios.get('/api/countries');
+  return axios.get('/api/places');
 };
 
-export const saveCountries = function (countryData) {
-  return axios.post('/api/contries', countryData);
+export const saveCountries = function (countryData, token) {
+  return axios.post('/api/places', countryData, { headers: { authorization: `Bearer ${token}` } });
 };
 export const deleteCountry = function (countryId) {
-  return axios.delete(`/api/countries/${countryId}`);
+  return axios.delete(`/api/places/${countryId}`);
 };
 export const searchCountries = function (country) {
   return axios({

@@ -18,6 +18,8 @@ import AuthService from '../utils/auth';
 function BucketList() {
 
   const userData = useContext(UserInfoContext);
+  //you can do userData.savedPlaces to get array of saved places
+  //loop through the array userData.savedPlaces
 
   const { countries: savedCountries, getSavedCountries } = useContext(SavedCountryContext);
   useEffect(() => {
