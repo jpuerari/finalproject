@@ -6,7 +6,7 @@ import UserInfoContext from '../utils/UserInfoContext';
 import AuthService from '../utils/auth';
 import SavedCountryContext from '../utils/SavedCountryContext';
 
-import { savedCountries, searchCountries, getSavedCountries, openWeather, cityName, getPhoto } from '../utils/API';
+import { saveCountries, searchCountries, getSavedCountries, openWeather, cityName, getPhoto } from '../utils/API';
 
 import SavedCityContext from '../utils/SavedCityContext';
 
@@ -107,9 +107,9 @@ function Places() {
     if (!token) {
       return false;
     }
+    console.log("token: ", token)
 
-
-    API.savedCountries(countryToSave)
+    saveCountries(countryToSave, token)
       .then(() => userData.getUserData())
       .catch((err) => console.log(err));
   };
