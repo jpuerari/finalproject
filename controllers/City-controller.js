@@ -6,7 +6,7 @@ module.exports = {
       const cities = await Place.find();
       return res.json(cities);
     },
-    async savedCity(req, res) {
+    async saveCity(req, res) {
       console.log(req.body);
       try {
         const savedCity = await City.create(req.body);

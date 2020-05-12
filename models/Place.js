@@ -2,9 +2,9 @@ const { Schema, model } = require('mongoose');
 
 
 const placeSchema = new Schema({
-  countryId:{
-    type: String,
-  },
+  // countryId:{
+  //   type: String,
+  // },
   nativeName: {
     type: String,
   },
@@ -13,16 +13,18 @@ const placeSchema = new Schema({
     
   },
   currencies: {
-    type: String
+    type: [String]
   
   },
   languages: {
-    type: String,
+    type: [String],
    
   },
 
 })
 
+//const Place = model("Place", placeSchema);
 
+//module.exports = Place;
 
 module.exports = placeSchema;

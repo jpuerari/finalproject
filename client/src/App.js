@@ -28,10 +28,10 @@ function App(){
       }
       API.getMe(token)
         // .then(({ data: { username, name, savedPlaces} }) =>{
-        .then(({ data: { username} }) =>{
+        .then(({ data: { username, savedPlaces} }) =>{
           console.log("inside getMe in app", username)
           // setUserInfo({ ...userInfo, username, name, savedPlaces})
-          setUserInfo({ ...userInfo, username })
+          setUserInfo({ ...userInfo, username, savedPlaces })
         }
         )
         .catch((err) => console.log(err));

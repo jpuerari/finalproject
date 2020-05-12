@@ -56,12 +56,12 @@ function BucketList() {
       <Navbar />
       <Jumbotron fluid className='text-light bg-dark'>
         <Container>
-          <h1>🛩 My Bucket List 🛩</h1>
+          <h1 className='bucket'>🛩 My Bucket List 🛩</h1>
         </Container>
       </Jumbotron>
 
       <Container fluid>
-        <h2>
+        <h2 className='search'>
           {userData.savedCountries.length
             ? `Viewing ${userData.savedCountries.length} saved ${userData.savedCountries.length === 1 ? 'country' : 'country'}:`
             : 'You have no saved countries!'}

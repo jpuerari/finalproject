@@ -19,9 +19,9 @@ h1{
 
 .form-box {
     background-color: rgb(227, 222, 204);
-    opacity: 0.6;
-    padding: 15px;
-    max-width: 100%;
+    opacity: 0.5;
+    padding: 1px;
+    max-width: 75%;
 }
 .wrapper{
     width: 100%;
@@ -35,4 +35,25 @@ h2{
     float: left ;
     color: white;
     text-align: center;
+}
+
+.logs
+{
+    font-family: 'Faster One', cursive;
+}
+
+.bucket{
+    font-family: 'Fredericka the Great', cursive;
+}
+
+.link{
+    font-family: 'Londrina Sketch', cursive;
+}
+
+.search{
+    font-family: 'Cabin Sketch', cursive;
+}
+
+.cardDisplay{
+    font-family: 'Inknut Antiqua', serif;
 }
