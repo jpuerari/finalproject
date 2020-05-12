@@ -61,12 +61,6 @@ getPhoto(searchInput)
 })
 
 
-
-
-
-
-
-
     // GET weatherdata through openWeather
     // openWeather(searchInput).then().catch()
     openWeather(searchInput)
@@ -98,10 +92,7 @@ getPhoto(searchInput)
          .catch((err) => console.log(err));
 
 
-
-         
-
-
+     
     // SEARCH FOR COUNTRY DATA
 
     searchCountries(searchInput)
@@ -132,8 +123,6 @@ getPhoto(searchInput)
       .then(() => setCountries(''))
       .catch((err) => console.log(err));
   };
-
-
 
 
 
@@ -255,13 +244,8 @@ getPhoto(searchInput)
           })}
         </CardColumns>
       </Container>
-
-
-    
-
-      </>
-  )
-
+   </>
+  );
 }
 
 export default Places;
