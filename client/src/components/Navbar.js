@@ -7,14 +7,14 @@ function AppNavbar(){
     return(
     <Navbar bg='dark' variant='dark' expand='lg'>
       <Container fluid>
-        <Navbar.Brand as={Link} to='/'>
+        <Navbar.Brand className='link' as={Link} to='/'>
         🌎 Travel Bucket List  🌎
         </Navbar.Brand>
         <Navbar.Toggle aria-controls="navbar" />
         <Navbar.Collapse id='navbar'>
             <Nav className='ml-auto'>
-              <Nav.Link as={Link} to='/Places'>Search Places 🏨</Nav.Link>
-              <Nav.Link as={Link} to='/BucketList'>My BucketList 📖</Nav.Link>
+              <Nav.Link className='link' as={Link} to='/Places'>Search Places 🏨</Nav.Link>
+              <Nav.Link className='link' as={Link} to='/BucketList'>My BucketList 📖</Nav.Link>
             </Nav>
         </Navbar.Collapse>
       </Container>

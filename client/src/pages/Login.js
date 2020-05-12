@@ -108,7 +108,7 @@ class Login extends Component {
         <div className="form-check text-center mx-auto form-box">
           <div className="wrapper">
             <div className="form-wrapper">
-              <h1>Login</h1>
+              <h1 className="logs">Login</h1>
               <form onSubmit={this.submitHandle} noValidate>
                 <div className="usr">
                

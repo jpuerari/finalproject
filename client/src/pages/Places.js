@@ -135,7 +135,7 @@ function Places() {
       <Navbar />
       <Jumbotron fluid className='text-light bg-dark'>
         <Container>
-          <h1>🛩 Travel Bucket List 🛩</h1>
+          <h1 className="bucket">🛩 Travel Bucket List 🛩</h1>
         </Container>
       </Jumbotron>
 
@@ -151,17 +151,18 @@ function Places() {
                 <option value="country">Country</option>
               </Form.Control>
               <Form.Control
+                className='search'
                 name='searchInput'
                 value={searchInput}
                 onChange={(e) => setSearchInput(e.target.value)}
                 type='text'
                 size='lg'
-                placeholder='✈️  Search for a Country'
+                placeholder='✈️  Search for a Place'
               />
             </Col>
 
             <Col xs={12} md={4}>
-              <Button type='submit' variant='danger' size='lg'>
+              <Button className='search' type='submit' variant='danger' size='lg'>
                 Submit Search
                   </Button>
             </Col>
@@ -183,12 +184,12 @@ function Places() {
 
 
       <Container className='justify-content-center' style={{ marginTop: '20px' }} fluid>
-        <h2 >{countries.length ? ` Viewing ${countries.length} results:` : 'Search for a Place to begin'}</h2>
+        <h2 className='search' >{countries.length ? ` Viewing ${countries.length} results:` : 'Search for a Place to begin'}</h2>
         <CardColumns>
           {countries.map((country) => {
 
             return (
-              <Card key={country.countryId} border='dark' >
+              <Card className='cardDisplay' key={country.countryId} border='dark' >
                 {country.image ? <Card.Img src={country.image} alt={`The cover for ${country.title}`} variant='top' /> : null}
                 <Card.Body>
                   <Card.Title>{country.name}</Card.Title>
@@ -201,7 +202,7 @@ function Places() {
 
                   <Card.Text className='small'>Languages Name: {country.languages}</Card.Text>
 
-                  <Button
+                  <Button className='search'
                     disabled={userData.savedCountry?.some((savedCountry) => savedCountry.countryId === country.countryId)}
                     className='btn-block btn-info'
                     onClick={() => handleSaveCountries(country.countryId)}>
@@ -215,7 +216,42 @@ function Places() {
             );
           })}
         </CardColumns>
+        </Container>
+
+
+        <Container>
+          
+        <CardColumns>
+          {cities.map((city) => {
+
+            return (
+              <Card key={city.cityId} border='dark' >
+      
+                <Card.Body>
+                  <Card.Title>{city.name}</Card.Title>
+
+                  <Card.Text className='small'> City Population: {city.population}</Card.Text>
+
+                  <Button
+                    disabled={userData.savedCity?.some((savedCity) => savedCity.cityId === city.cityId)}
+                    className='btn-block btn-info'
+                    onClick={() => handleSaveCity(city.cityId)}>
+                    {userData.savedCity?.some((savedCity) => savedCity.cityId === city.cityId)
+                      ? 'This city has already been saved!'
+                      : 'Save this city!'}
+                  </Button>
+
+                </Card.Body>
+              </Card>
+            );
+          })}
+        </CardColumns>
       </Container>
+
+      
+    
+     
+
 
 
 
