@@ -1,15 +1,23 @@
 import axios from 'axios';
 
 export const getSavedCountries = function () {
-  return axios.get('/api/places');
+  return axios.get('/api/users');
 };
 
 export const saveCountries = function (countryData, token) {
-  return axios.post('/api/places', countryData, { headers: { authorization: `Bearer ${token}` } });
+  return axios.post('/api/users', countryData, { headers: { authorization: `Bearer ${token}` } });
 };
-export const deleteCountry = function (countryId) {
-  return axios.delete(`/api/places/${countryId}`);
+export const deleteCountry = function (countryId, token) {
+  return axios.delete(`/api/users/${countryId}`,{ headers: { authorization: `Bearer ${token}` } });
 };
+
+export const saveCity = function (cityData, token) {
+  return axios.put('/api/users/cities', cityData, { headers: { authorization: `Bearer ${token}` } });
+};
+export const deleteCity = function (cityId, token) {
+  return axios.delete(`/api/users/cities/${cityId}`,{ headers: { authorization: `Bearer ${token}` } });
+};
+
 export const searchCountries = function (country) {
   return axios({
     "method": "GET",
@@ -35,6 +43,7 @@ export const openWeather = search => axios({
   }
 })
 
+
 export const login = function(userData){
   return axios.post("/api/auth/signin", userData)
 }
@@ -42,17 +51,7 @@ export const test = function(){
   return axios.post("/api/auth/test")
 }
 
-export const cityName = search => axios({
-  "method": "GET",
-  "url": "https://wft-geo-db.p.rapidapi.com/v1/geo/cities",
-  "headers": {
-    "content-type": "application/octet-stream",
-    "x-rapidapi-host": "wft-geo-db.p.rapidapi.com",
-    "x-rapidapi-key": "df7e857c6cmsha59b298d56b071ap16165fjsndbf8b1441fa8"
-  },
-  "params": {
-    "namePrefix": search,
-  }})
+
 
   export const getMe = function (token) {
     return axios.get('/api/auth/me', { headers: { authorization: `Bearer ${token}` } });

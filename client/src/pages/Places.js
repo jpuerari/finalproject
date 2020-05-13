@@ -6,7 +6,7 @@ import UserInfoContext from '../utils/UserInfoContext';
 import AuthService from '../utils/auth';
 import SavedCountryContext from '../utils/SavedCountryContext';
 
-import { saveCountries, searchCountries, getSavedCountries, openWeather, cityName, getPhoto } from '../utils/API';
+import { saveCountries, searchCountries, getSavedCountries, openWeather, saveCity, getPhoto } from '../utils/API';
 
 import SavedCityContext from '../utils/SavedCityContext';
 
@@ -15,7 +15,7 @@ function Places() {
   // create state for holding returned  api data 
   const [countries, setCountries] = useState([]);
   // create state to hold returned api data for cityName function
-  const [cities, setCities] = useState([]);
+
   // create state for storing and setting photo URL from google photos api
   const [locationPhoto, setLocationPhoto] = useState('');
   // create state to hold weather and set weather data
@@ -57,6 +57,7 @@ function Places() {
       openWeather(searchInput)
         .then(response => {
           console.log(response.data)
+          setCountries([])
           setWeatherData(response.data)
         })
         .catch(err => console.warn(err))
@@ -89,7 +90,7 @@ function Places() {
 
           // }));
           // console.log(countryData);
-
+          setWeatherData({})
           return setCountries(data);
         })
         //.then(() => setCountries(''))
@@ -116,7 +117,6 @@ function Places() {
 
   const handleSaveCity = (cityId) => {
 
-    const cityToSave = cityName.find((city) => city.cityId === cityId);
 
     const token = AuthService.loggedIn() ? AuthService.getToken() : null;
 
@@ -124,8 +124,15 @@ function Places() {
       return false;
     }
 
+    const cityData = {
+      cityName: weatherData.city.name,
+      countryName: weatherData.city.countryName,
+      population: weatherData.city.population,
 
-    cityName(cityToSave, token)
+    }
+
+
+    saveCity(cityData, token)
       .then(() => userData.getUserData())
       .catch((err) => console.log(err));
   };
@@ -170,21 +177,11 @@ function Places() {
         </Form>
 
 
-        {/* i hope i put this in the right place lol -josh */}
-        {
-          weatherData.city && <h1>{weatherData.city.population}</h1>
-        }
-
-
-
-        {/* i hope i put this in the right place lol -josh */}
-
-
       </Container>
 
 
       <Container className='justify-content-center' style={{ marginTop: '20px' }} fluid>
-        <h2 className='search' >{countries.length ? ` Viewing ${countries.length} results:` : 'Search for a Place to begin'}</h2>
+        <h2 className='search' >{countries.length ? ` Viewing ${countries.length} results:` : Object.keys(weatherData).length ? 'Viewing your searched city' : 'Search for a Place to begin'}</h2>
         <CardColumns>
           {countries.map((country) => {
 
@@ -201,46 +198,13 @@ function Places() {
                   <Card.Text className='small'>Currencies Name: {country.currencies}</Card.Text>
 
                   <Card.Text className='small'>Languages Name: {country.languages}</Card.Text>
-
-                  <Button className='search'
-                    disabled={userData.savedCountry?.some((savedCountry) => savedCountry.countryId === country.countryId)}
-                    className='btn-block btn-info'
-                    onClick={() => handleSaveCountries(country.countryId)}>
-                    {userData.savedCountry?.some((savedCountry) => savedCountry.countryId === country.countryId)
-                      ? 'This country has already been saved!'
-                      : 'Save this country!'}
+                  {userData.username && (
+                    <Button
+                      className='btn-block btn-info'
+                      onClick={() => handleSaveCountries(country.countryId)}>
+                      save this country
                   </Button>
-
-                </Card.Body>
-              </Card>
-            );
-          })}
-        </CardColumns>
-        </Container>
-
-
-        <Container>
-          
-        <CardColumns>
-          {cities.map((city) => {
-
-            return (
-              <Card key={city.cityId} border='dark' >
-      
-                <Card.Body>
-                  <Card.Title>{city.name}</Card.Title>
-
-                  <Card.Text className='small'> City Population: {city.population}</Card.Text>
-
-                  <Button
-                    disabled={userData.savedCity?.some((savedCity) => savedCity.cityId === city.cityId)}
-                    className='btn-block btn-info'
-                    onClick={() => handleSaveCity(city.cityId)}>
-                    {userData.savedCity?.some((savedCity) => savedCity.cityId === city.cityId)
-                      ? 'This city has already been saved!'
-                      : 'Save this city!'}
-                  </Button>
-
+                  )}
                 </Card.Body>
               </Card>
             );
@@ -248,9 +212,40 @@ function Places() {
         </CardColumns>
       </Container>
 
-      
-    
-     
+
+      <Container>
+
+        <CardColumns>
+          {/* {cities.map((city) => { */}
+          {Object.keys(weatherData).length &&
+            <Card className='cardDisplay' key={weatherData.cityId} border='dark' >
+
+              <Card.Body>
+                <Card.Title>{weatherData.city.name}</Card.Title>
+                
+                <Card.Text className='small'> County: {weatherData.city.country}</Card.Text>
+
+                <Card.Text className='small'> City Population: {weatherData.city.population}</Card.Text>
+
+                
+                {userData.username && (
+                  <Button
+                    className='btn-block btn-info'
+                    onClick={() => handleSaveCity(weatherData.cityId)}>
+                    save this city
+
+                  </Button>
+                )}
+              </Card.Body>
+            </Card>
+
+          }
+        </CardColumns>
+      </Container>
+
+
+
+
 
 
 

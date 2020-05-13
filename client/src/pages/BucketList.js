@@ -2,7 +2,7 @@ import React, { useContext, useEffect } from "react";
 import { Jumbotron, Container, Row, Col, Form, Card, Button, CardColumns, Collapse } from 'react-bootstrap';
 import Navbar from '../components/Navbar';
 
-import SavedCountryContext from '../utils/SavedCountryContext';
+
 
 import UserInfoContext from '../utils/UserInfoContext';
 
@@ -19,15 +19,9 @@ function BucketList() {
 
   const userData = useContext(UserInfoContext);
 
-  const { countries: savedCountries, getSavedCountries } = useContext(SavedCountryContext);
-  useEffect(() => {
-    API.getSavedCountries()
-      .then(data => {
-        console.log(data)
-      })
 
-  }, [])
-  console.log(getSavedCountries)
+
+  console.log(userData)
 
 
 
@@ -35,17 +29,32 @@ function BucketList() {
   const handleDeleteCountry = (countryId) => {
 
     const token = AuthService.loggedIn() ? AuthService.getToken() : null;
-
+    console.log(countryId)
     if (!token) {
+      console.log("no token")
       return false;
     }
-
+    console.log(token)
     API.deleteCountry(countryId, token)
     // upon succes, update user data to reflect place change
       .then(() => userData.getUserData())
       .catch((err) => console.log(err));
   };
 
+  const handleDeleteCity = (cityId) => {
+
+    const token = AuthService.loggedIn() ? AuthService.getToken() : null;
+    console.log(cityId)
+    if (!token) {
+      console.log("no token")
+      return false;
+    }
+    console.log(token)
+    API.deleteCity(cityId, token)
+    // upon succes, update user data to reflect place change
+      .then(() => userData.getUserData())
+      .catch((err) => console.log(err));
+  };
 
 
 
@@ -62,12 +71,12 @@ function BucketList() {
 
       <Container fluid>
         <h2 className='search'>
-          {userData.savedCountries.length
-            ? `Viewing ${userData.savedCountries.length} saved ${userData.savedCountries.length === 1 ? 'country' : 'country'}:`
-            : 'You have no saved countries!'}
+          {userData.savedPlaces.length
+            ? `Viewing ${userData.savedPlaces.length} saved ${userData.savedPlaces.length === 1 ? 'Places' : 'Places'}:`
+            : 'You have no saved Places!'}
         </h2>
         <CardColumns>
-          {userData.savedCountries.map((country) => {
+          {userData.savedPlaces.map((country) => {
             return (
               <Card key={country._id} border='dark'>
                 <Card.Body>
@@ -76,6 +85,23 @@ function BucketList() {
                   <Card.Text>{country.capital}
                     {country.currencies}{country.languages}</Card.Text>
                   <Button className='btn-block btn-danger' onClick={() => handleDeleteCountry(country._id)}>
+                    Delete this Place!
+                  </Button>
+                </Card.Body>
+              </Card>
+            );
+          })}
+        </CardColumns>
+
+        <CardColumns>
+          {userData.savedCities.map((city) => {
+            return (
+              <Card key={city._id} border='dark'>
+                <Card.Body>
+                  <Card.Title>Name:{city.cityName}</Card.Title>
+                 
+                  <Card.Text>City Population:{city.population}</Card.Text>
+                  <Button className='btn-block btn-danger' onClick={() => handleDeleteCity(city._id)}>
                     Delete this Place!
                   </Button>
                 </Card.Body>

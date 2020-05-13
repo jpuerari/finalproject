@@ -68,7 +68,35 @@ module.exports = {
     const updatedUser = await User.findOneAndUpdate(
       { _id: user._id },
       //fix when we can
-      { $pull: { savedPlaces: { countryId: params.id } } },
+      { $pull: { savedPlaces: { _id: params.id } } },
+      { new: true }
+    );
+    if (!updatedUser) {
+      return res.status(404).json({ message: "Couldn't find user with this id!" });
+    }
+    return res.json(updatedUser);
+  },
+
+  async saveCity({ user, body }, res) {
+    console.log(user);
+    try {
+      const updatedUser = await User.findOneAndUpdate(
+        { _id: user._id },
+        { $addToSet: { savedCities: body } },
+        { new: true, runValidators: true }
+      );
+      return res.json(updatedUser);
+    } catch (err) {
+      console.log(err);
+      return res.status(400).json(err);
+    }
+  },
+  // remove a book from `savedBooks`
+  async deleteCity({ user, params }, res) {
+    const updatedUser = await User.findOneAndUpdate(
+      { _id: user._id },
+      //fix when we can
+      { $pull: { savedCities: { _id: params.id } } },
       { new: true }
     );
     if (!updatedUser) {

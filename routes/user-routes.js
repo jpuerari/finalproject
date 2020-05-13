@@ -3,6 +3,8 @@ const {
   createUser,
   getAllUsers,
   getSingleUser,
+  saveCity,
+  deleteCity,
   savePlace,
   deletePlace,
   login,
@@ -13,6 +15,10 @@ const { authMiddleware } = require('./../utils/auth');
 
 // put authMiddleware anywhere we need to send a token for verification of user
 router.route('/').get(getAllUsers).post(createUser).put(authMiddleware, savePlace);
+
+router.route('/cities').put(authMiddleware, saveCity);
+
+router.route('/cities/:id').delete(authMiddleware, deleteCity);
 
 router.route('/login').post(login);
 
