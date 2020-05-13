@@ -33,7 +33,7 @@ module.exports = {
     }
   },
   async deletePlace(req, res) {
-
+console.log(req.params)
     const deletedPlace = await Place.findOneAndRemove({ _id: req.params.id });
     if (!deletedPlace) {
       return res.status(404).json({ message: "Couldn't find a Place with this id!" });

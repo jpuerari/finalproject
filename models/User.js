@@ -2,6 +2,7 @@ const mongoose = require("mongoose");
 
 const bcrypt = require('bcrypt');
 const placeSchema = require('./Place');
+const citySchema = require('./city');
 const SALT_WORK_FACTOR = 5;
 
 const Schema = mongoose.Schema;
@@ -20,7 +21,7 @@ const UserSchema = new Schema({
     required: true,
   },
   savedPlaces: [placeSchema],
-  
+  savedCities: [citySchema],
   savedCountries: {
     type: [String],
     default: []

@@ -16,6 +16,8 @@ import "./App.css";
 function App(){ 
   const [userInfo, setUserInfo] = useState({
     savedCountries: [],
+    savedPlaces:[],
+    savedCities: [],
     username: 'person2',
     name: '',
     countryCount: 0,
@@ -28,10 +30,10 @@ function App(){
       }
       API.getMe(token)
         // .then(({ data: { username, name, savedPlaces} }) =>{
-        .then(({ data: { username, savedPlaces} }) =>{
+        .then(({ data: { username, savedPlaces, savedCities} }) =>{
           console.log("inside getMe in app", username)
           // setUserInfo({ ...userInfo, username, name, savedPlaces})
-          setUserInfo({ ...userInfo, username, savedPlaces })
+          setUserInfo({ ...userInfo, username, savedPlaces, savedCities })
         }
         )
         .catch((err) => console.log(err));
