@@ -1,5 +1,5 @@
 // import user model
-const  User  = require('../models/User');
+const User = require('../models/User');
 // import sign token function from auth
 const { signToken } = require('../utils/auth');
 
@@ -23,11 +23,24 @@ module.exports = {
   },
   // create a user, sign a token, and send it back (to client/src/components/SignUpForm.js)
   async createUser({ body }, res) {
-    const user = await User.create(body);
+    let user = await User.findOne({ username: body.username });
+
+    console.log('hello');
+    console.log(body);
+    if (!user) {
+      user = await User.create({ ...body, name: body.name || 'demo user' });
+    }
 
     if (!user) {
       return res.status(400).json({ message: 'Something is wrong!' });
     }
+
+    const correctPw = await user.comparePassword(body.password);
+
+    if (!correctPw) {
+      return res.status(400).json({ message: 'Wrong password!' });
+    }
+
     const token = signToken(user);
     res.json({ token, user });
   },
