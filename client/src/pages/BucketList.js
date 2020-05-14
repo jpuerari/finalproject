@@ -64,13 +64,11 @@ function BucketList() {
             return (
               <Card key={country._id} border='dark'>
                 <Card.Body>
-                  <Card.Title>{country.title}</Card.Title>
-                  <p className='small'>Native Name: {country.nativeName}</p>
-                  <Card.Text>
-                    {country.capital}
-                    {country.currencies}
-                    {country.languages}
-                  </Card.Text>
+                  <Card.Title>{country.name}</Card.Title>
+                  <Card.Text className='small'>Native Name: {country.nativeName}</Card.Text>
+                  <Card.Text className='small'>Capital: {country.capital} </Card.Text>
+                  <Card.Text className='small'>Currencies Name: {country.currencies}</Card.Text>
+                  <Card.Text className='small'>Languages Name: {country.languages}</Card.Text>
                   <Button className='btn-block btn-danger' onClick={() => handleDeleteCountry(country._id)}>
                     Delete this Place!
                   </Button>
